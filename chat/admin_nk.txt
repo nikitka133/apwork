@@ -5,6 +5,3 @@ admin: e45
 admin: ghhh 
 admin: ckbi 
 admin: ckbi 
-ffff
-ffff
-ghhhhh
