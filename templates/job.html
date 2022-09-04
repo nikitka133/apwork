@@ -1,0 +1,34 @@
+{% extends 'basic.html' %}
+
+{% block content %}
+{#    спсок обьявлений#}
+    {% for f in page_obj %}
+        <div class="block-job">
+            <ul>
+                <a href="{% url 'job_view' f.pk %}">
+                    <li><strong>{{ f.title }}</strong></li>
+                </a>
+                <li>{{ f.description }}</li>
+                <li><strong>От {{ f.max_price }}₽ до {{ f.max_price }}₽</strong></li>
+                <li>Дедлайн: {{ f.expired_date }}</li>
+            </ul>
+        </div>
+    {% endfor %}
+{#    пагинация#}
+    <div class="pagination">
+        {% if paginator.nim_pages == 1 %}
+        {% else %}
+            <ul>
+            {% for page in paginator.page_range %}
+                {% if page_obj.number == page %}
+                    <li>{{ page }}</li>
+                {% else %}
+                    <a href="{% url 'job' %}?page={{ page }}">
+                        <li><strong>{{ page }}</strong></li>
+                    </a>
+                {% endif %}
+            {% endfor %}
+        </ul>
+        {% endif %}
+    </div>
+{% endblock %}

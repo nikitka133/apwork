@@ -1,0 +1,140 @@
+* {
+    padding: 0;
+    margin: 0;
+}
+
+#clear {
+    clear: both;
+}
+
+#header {
+    background-color: #cfb1ea;
+    min-height: 100px;
+    min-width: 300px;
+}
+
+#menu {
+    background-color: #b6e38e;
+    min-width: 20%;
+    min-height: 80vh;
+    float: left;
+}
+
+#menu a {
+    padding-left: 20px
+}
+#menu h5 {
+    padding-left: 10px
+}
+#content {
+    background-color: #c18f8f;
+    min-height: 80vh;
+    min-width: 60%;
+    max-width: 60%;
+    float: left;
+}
+
+#footer {
+    background-color: #6d97d9;
+    min-width: 100px;
+    min-height: 50px;
+
+}
+
+#header a {
+    text-decoration: none;
+    color: #444444;
+}
+
+#filter {
+    min-width: 20%;
+    background-color: blueviolet;
+    min-height: 80vh;
+
+}
+.button-send {
+    padding-left: 10px;
+}
+.button-send button {
+    padding: 1px;
+}
+.register-form {
+    margin:0 auto;
+    max-width: 400px;
+}
+
+.login {
+     margin:0 auto;
+    max-width: 400px;
+}
+
+.form-group label{
+    display: none;
+}
+
+.form-group {
+    padding-top: 10px;
+}
+
+#header ul {
+    text-align: right;
+}
+
+#header li {
+    display: inline;
+}
+
+.block-job {
+    border: 3px dashed #444444;
+    margin: 5px;
+}
+
+.block-job li {
+    list-style-type: none;
+    text-decoration: none;
+    padding-left: 10px;
+    color: #1f1f1f;
+}
+
+.block-job li{
+
+}
+
+.pagination li {
+    margin-left: 15px;
+    padding: 3px;
+    list-style-type: none;
+    text-decoration: none;
+    display: inline;
+    color: #444444;
+    border: 1px solid #444444;
+}
+
+.paginate-button {
+    border: 1px;
+}
+
+a:any-link {
+    color: #444444;
+}
+a:hover {
+    color: #800000;}
+
+.profile-menu {
+    margin-left: 15px;
+}
+
+li {
+    list-style-type: none;
+    text-decoration: none;
+    color: #444444;
+}
+
+#menu a{
+    color: #444444;
+}
+
+.create-form {
+    margin:0 auto;
+    max-width: 400px;
+}

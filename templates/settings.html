@@ -1,0 +1,9 @@
+{% extends 'basic.html' %}
+
+{% block menu %}
+    {% include 'module/profile_menu.html' %}
+{% endblock %}
+
+{% block content %}
+    {{ form.as_p }}
+{% endblock %}

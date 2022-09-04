@@ -1,0 +1,78 @@
+{% load static %}
+{% load bootstrap4 %}
+<!doctype html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="{% static 'style/style.css' %}">
+    {% bootstrap_css %}
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>{{ title }}</title>
+</head>
+<body>
+
+<div id="main">
+    {#шапка#}
+    <div id="header">
+        <a href="{% url 'home' %}"><h1>Freelance</h1></a>
+        <ul>
+            {% if request.user.is_authenticated %}
+                <a href="{% url 'account' %}"><li>{{ user.username }}</li></a>
+                <li><a href="{% url 'logout' %}">Выход</a></li>
+            {% else %}
+                <li><a href="{% url 'register' %}">Регистрация</a></li>
+                <li><a href="{% url 'login' %}">Вход</a></li>
+                </ul>
+
+            {% endif %}
+    </div>
+    {#меню#}
+    <div id="menu">
+    {% block menu %}
+
+
+        {% for cat in category %}
+            {% ifchanged cat.category.pk %}
+                <ul>
+                <h5>{{ cat.category.title_cat }}</h5>
+            {% endifchanged %}
+        <a href="{% url 'job' %}category/{{ cat.slug_sub_cat }}">{{ cat.tittle_sub_cat }}</a>{#заменить хардкод#}
+        </ul>
+        {% endfor %}
+    {% endblock %}
+    </div>
+    {#блок контента#}
+    <div id="content">
+        {% block content %}
+            {% for f in form %}
+                <div class="block-job">
+                    <ul>
+                        <a href="{% url 'job_view' f.pk %}"><li><strong>{{ f.title }}</strong></li></a>
+                        <li>{{ f.description }}</li>
+                        <li><strong>От {{ f.max_price }}₽ до {{ f.max_price }}₽</strong></li>
+                        <li>Дедлайн: {{ f.expired_date }}</li>
+                    </ul>
+                </div>
+            {% endfor %}
+
+        {% endblock %}
+
+    </div>
+    {#фильтр#}
+    <div id="filter">
+        {% block filter %}
+            <h5>Фильтр</h5>
+        {% endblock %}
+    </div>
+
+    <div id="clear"></div>
+    {#футер#}
+    <div id="footer">
+        <p>Apwork.ru {% now "Y" %}</p>
+    </div>
+</div>
+
+</body>
+</html>

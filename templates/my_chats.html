@@ -1,0 +1,14 @@
+{% extends 'basic.html' %}
+
+{% block menu %}
+    {% include 'module/profile_menu.html' %}
+{% endblock %}
+
+{% block content %}
+    {% for i in chats %}
+        <form action="{% url 'chat' %}" method="get">
+            <input type="hidden" name="chat" value="{{ i.name_chat }}">
+            <input type="submit" value="{{ i.job_name }}"/>
+        </form>
+    {% endfor %}
+{% endblock %}

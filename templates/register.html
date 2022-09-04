@@ -1,0 +1,24 @@
+{% extends 'basic.html' %}
+{% load bootstrap4 %}
+<div class="reg-page">
+
+    {% block content %}
+        {% if user.is_authenticated %}
+            <p>Вы вошли как {{ user }}</p>
+
+        {% else %}
+            <div class="register-form">
+            <h2>Регистрация</h2>
+            <form action="" method="post">
+
+            {% csrf_token %}
+            {% bootstrap_form form %}
+            {% buttons %}
+                <button type="submit" class="btn btn-primary">Зарегистрироваться</button>
+            {% endbuttons %}
+        {% endif %}
+    </form>
+    </div>
+    {% endblock %}
+
+</div>

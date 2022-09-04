@@ -1,0 +1,12 @@
+{% extends 'basic.html' %}
+{% load bootstrap4 %}
+{% block content %}
+
+    <div class="login">
+        <form action="" method="post">
+            {% csrf_token %}
+            {% bootstrap_form form %}
+            <button style="border-radius: 3px;" type="submit">Вход</button>
+        </form>
+    </div>
+{% endblock %}
