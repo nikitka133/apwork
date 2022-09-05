@@ -1,8 +1,8 @@
 from django import forms
-from django.contrib.auth.forms import UserCreationForm, SetPasswordForm, PasswordChangeForm
+from django.contrib.auth.forms import UserCreationForm, PasswordChangeForm
 from django.forms import PasswordInput, ModelForm
 from phonenumber_field.formfields import PhoneNumberField
-from main.models import ROLE, Job
+from main.models import ROLE, Job, Proposal
 from main.models import AdvUser
 
 
@@ -30,13 +30,11 @@ class CreateJobForm(ModelForm):
     class Meta:
         model = Job
         fields = '__all__'
-        exclude = ('is_active', 'processing', 'offer')
+        exclude = ('is_active', 'processing', 'offer', 'executor')
         widgets = {'author': forms.HiddenInput}
 
 
 class ChangeUserInfoForm(forms.ModelForm):
-    # email = forms.EmailField(required=True, label="Email!!!")
-
     class Meta:
         model = AdvUser
         fields = 'first_name', 'last_name', 'email',
@@ -45,3 +43,11 @@ class ChangeUserInfoForm(forms.ModelForm):
 class ChangePasswordForm(PasswordChangeForm):
     new_password1 = forms.CharField()
     new_password2 = forms.CharField()
+
+
+class ProposalForm(forms.ModelForm):
+
+    class Meta:
+        model = Proposal
+        fields = '__all__'
+        exclude = ('accepted', )

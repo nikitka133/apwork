@@ -13,8 +13,11 @@
     </div>
     {% if user.is_authenticated %}
         <div class="button-send" style="float: left; padding-right: 10px"> {#поправить стиль#}
-            <button>Откликнуться</button>
-
+            <form action="{% url 'send_proposal' %}" method="get">
+                <input type="hidden" name="employer" value="{{ form.author.id }}">
+                <input type="hidden"  name="job_id" value="{{ form.id }}">
+                <button type="submit">Откликнуться</button>
+            </form>
         </div>
 
         <form action="{% url 'chat' %}" method="get">

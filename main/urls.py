@@ -2,7 +2,7 @@ from django.urls import path
 
 from main import views
 from main.views import RegisterUserView, LoginUserView, logout_user, create_job, account_page, ChangeUserInfoView, \
-    ChangePasswordView, JobListView, JobSubCatListView, my_chats
+    ChangePasswordView, JobListView, JobSubCatListView, my_chats, send_proposal
 
 urlpatterns = [
     path('', views.index, name='home'),
@@ -18,4 +18,5 @@ urlpatterns = [
     path('accounts/', account_page, name='account'),
     path('accounts/my_chats', my_chats, name='my_chats'),
     path('create_job/', create_job, name='create_job'),
+    path('job/send_proposal/', send_proposal, name='send_proposal'),
 ]

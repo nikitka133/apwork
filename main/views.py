@@ -6,10 +6,11 @@ from django.contrib.auth.views import LoginView, PasswordChangeView
 from django.contrib.messages.views import SuccessMessageMixin
 from django.shortcuts import redirect, render, get_object_or_404
 from django.urls import reverse_lazy
+from django.utils.datastructures import MultiValueDictKeyError
 from django.views.generic import CreateView, UpdateView, ListView
 
-from main.forms import UserCrForm, CreateJobForm, ChangeUserInfoForm, ChangePasswordForm
-from main.models import AdvUser, Job, Chat
+from main.forms import UserCrForm, CreateJobForm, ChangeUserInfoForm, ChangePasswordForm, ProposalForm
+from main.models import AdvUser, Job, Chat, Proposal
 from main.services import read_message, write_message
 
 
@@ -146,3 +147,25 @@ def my_chats(request):
     context = {'chats': chats}
 
     return render(request, 'my_chats.html', context)
+
+
+def send_proposal(request):
+    if request.method == 'GET':
+        try:
+            context = {'form': ProposalForm(initial={'employer': request.GET['employer'],
+                                                     'sender': request.user.id,
+                                                     'job': request.GET['job_id']
+                                                     }
+                                            )
+                       }
+            return render(request, 'send_proposal.html', context)
+        except MultiValueDictKeyError:
+            print('send_proposal get запрос не содержит нужного ключа--')
+            return redirect('job')
+
+    if request.method == 'POST':
+        form = ProposalForm(request.POST)
+        if form.is_valid():
+            form.save()
+
+        return redirect('job')
