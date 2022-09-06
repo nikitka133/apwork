@@ -45,7 +45,7 @@ class Proposal(models.Model):
     employer = models.ForeignKey(AdvUser, on_delete=models.PROTECT, )
     accepted = models.BooleanField(default=False)
     job = models.ForeignKey(Job, on_delete=models.PROTECT)
-    message = models.TextField(null=False, max_length=300)
+    message = models.TextField(null=False, max_length=300, verbose_name='Сообщение работодателю')
     price = models.PositiveIntegerField(verbose_name='Цена фрилансера')
 
 

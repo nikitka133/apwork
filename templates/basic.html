@@ -45,6 +45,7 @@
     </div>
     {#блок контента#}
     <div id="content">
+        {% bootstrap_messages %}
         {% block content %}
             {% for f in form %}
                 <div class="block-job">

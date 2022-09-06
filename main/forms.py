@@ -51,3 +51,7 @@ class ProposalForm(forms.ModelForm):
         model = Proposal
         fields = '__all__'
         exclude = ('accepted', )
+        widgets = {'sender': forms.HiddenInput,
+                   'employer': forms.HiddenInput,
+                   'job': forms.HiddenInput,
+                   }

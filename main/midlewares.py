@@ -6,5 +6,5 @@ def category_context_processor(request):
         context = {'category': SubCategory.objects.all(), "keyword": "", 'all': ""}
         return context
     else:
-        # обязательно что-то словарь
+        # обязательно вернуть словарь
         return {'nothing': 'OK'}

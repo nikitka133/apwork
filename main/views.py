@@ -167,5 +167,12 @@ def send_proposal(request):
         form = ProposalForm(request.POST)
         if form.is_valid():
             form.save()
-
+            messages.success(request, 'Заявка отправлена')
+            return redirect('job')
         return redirect('job')
+
+
+def proposal(request):
+    form = Proposal.objects.filter(employer=request.user.id)
+    context = {'form': form}
+    return render(request, 'proposal.html', context)

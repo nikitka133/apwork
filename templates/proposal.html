@@ -1,0 +1,17 @@
+{% extends 'basic.html' %}
+{% load bootstrap4 %}
+{% block menu %}
+    {% include 'module/profile_menu.html' %}
+{% endblock %}
+
+{% block content %}
+    <ul>
+    {% for f in form %}
+        <a href=""><div class="frame">
+            <li>{{ f.job }}</li>
+            <li>{{ f.message }}</li>
+        </div></a>
+
+    {% endfor %}
+    </ul>
+{% endblock %}

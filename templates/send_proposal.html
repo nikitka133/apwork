@@ -1,13 +1,17 @@
 {% extends 'basic.html' %}
-
+{% load bootstrap4 %}
 {% block menu %}
 
 {% endblock %}
 
 {% block content %}
+    <div class="create-form">
     <form action="{% url 'send_proposal' %}" method="post">
         {% csrf_token %}
-        {{ form.as_ul }}
-        <button type="submit">Отправить заявку</button>
+        {% bootstrap_form form %}
+        {% buttons %}
+        <button type="submit" class="btn btn-primary">Отправить заявку</button>
+        {% endbuttons %}
     </form>
+    </div>
 {% endblock %}

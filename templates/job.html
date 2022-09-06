@@ -16,7 +16,7 @@
     {% endfor %}
 {#    пагинация#}
     <div class="pagination">
-        {% if paginator.nim_pages == 1 %}
+        {% if paginator.num_pages == 1 %}
         {% else %}
             <ul>
             {% for page in paginator.page_range %}
