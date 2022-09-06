@@ -1,5 +1,6 @@
 from django.contrib import messages
 from django.contrib.auth import logout, login
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.views import LoginView, PasswordChangeView
@@ -42,11 +43,13 @@ class LoginUserView(LoginView):
         return reverse_lazy('home')
 
 
+@login_required
 def logout_user(request):
     logout(request)
     return redirect('login')
 
 
+@login_required
 def create_job(request):
     if request.method == 'POST':
         form = CreateJobForm(request.POST)
@@ -62,6 +65,7 @@ def create_job(request):
     return render(request, 'create_job.html', context)
 
 
+@login_required
 def account_page(request):
     context = {'jobs': Job.objects.filter(author_id=request.user.id)}
     return render(request, 'account.html', context)
@@ -114,6 +118,7 @@ class JobSubCatListView(ListView):
         return Job.objects.filter(category=self.kwargs['slug_sub_cat'])
 
 
+@login_required
 def chat(request):
     if request.method == 'GET':
         # получение сообщений чата из ЛК
@@ -142,6 +147,7 @@ def chat(request):
         return render(request, 'chat.html', context)
 
 
+@login_required
 def my_chats(request):
     chats = Chat.objects.filter(name_chat__contains=request.user.username)
     context = {'chats': chats}
@@ -149,6 +155,7 @@ def my_chats(request):
     return render(request, 'my_chats.html', context)
 
 
+@login_required
 def send_proposal(request):
     if request.method == 'GET':
         try:
@@ -172,7 +179,24 @@ def send_proposal(request):
         return redirect('job')
 
 
+@login_required
 def proposal(request):
     form = Proposal.objects.filter(employer=request.user.id)
     context = {'form': form}
     return render(request, 'proposal.html', context)
+
+
+@login_required
+def view_proposal(request):
+    if request.method == 'GET':
+        context = {'form': Proposal.objects.get(pk=request.GET['id'])}
+        return render(request, 'view_proposal.html', context)
+    return redirect('proposal')
+
+
+@login_required
+def pay(request):
+    if request.method == 'POST':
+        context = {'proposal_id': request.POST['proposal_id'],
+                   'price': request.POST['price']}
+        return render(request, 'pay.html', context=context)

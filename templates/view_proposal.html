@@ -1,0 +1,24 @@
+{% extends 'basic.html' %}
+{% load bootstrap4 %}
+{% block menu %}
+    {% include 'module/profile_menu.html' %}
+{% endblock %}
+
+{% block content %}
+    <ul>
+        <li>{{ form.sender.first_name }} {{ form.sender.last_name }}</li>
+        <li>Сообщение: {{ form.message }}</li>
+        <li>Цена фрилансера: {{ form.price }}</li>
+    </ul>
+
+    <form action="{% url 'pay' %}" method="post">
+    {% csrf_token %}
+        <input type="hidden" name="em" value="{{ user.id }}">
+        <input type="hidden" name="fr" value="{{ form.sender }}">
+        <input type="hidden" name="proposal_id" value="{{ form.id }}">
+        <input type="hidden" name="price" value="{{ form.price }}">
+        <button type="submit">Купить</button>
+    </form>
+
+
+{% endblock %}

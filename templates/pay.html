@@ -1,0 +1,19 @@
+{% extends 'basic.html' %}
+
+{% block menu %}
+
+{% endblock %}
+
+{% block content %}
+<form method="POST" action="https://yoomoney.ru/quickpay/confirm.xml">
+    <input type="hidden" name="receiver" value="410015704004254"/>
+    <input type="hidden" name="quickpay-form" value="donate"/>
+{#    <input type="hidden" name="targets" value="нЕ работает название платежа"/>#}
+    <input type="hidden" name="sum" value="{{ price }}" data-type="number"/>
+{#    <input type="hidden" name="successURL" value="на какой адрес" data-type="number"/>#}
+{#    <input type="hidden" name="label" value="вернет после платежа" data-type="number"/>#}
+    <label><input type="radio" name="paymentType" value="PC"/>ЮMoney</label>
+    <label><input type="radio" name="paymentType" value="AC"/>Банковской картой</label>
+    <input type="submit" value="Перевести"/>
+</form>
+{% endblock %}
