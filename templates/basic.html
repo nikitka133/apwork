@@ -19,7 +19,9 @@
         <a href="{% url 'home' %}"><h1>Freelance</h1></a>
         <ul>
             {% if request.user.is_authenticated %}
-                <a href="{% url 'account' %}"><li>{{ user.username }}</li></a>
+                <a href="{% url 'account' %}">
+                    <li>{{ user.username }}</li>
+                </a>
                 <li><a href="{% url 'logout' %}">Выход</a></li>
             {% else %}
                 <li><a href="{% url 'register' %}">Регистрация</a></li>
@@ -30,18 +32,18 @@
     </div>
     {#меню#}
     <div id="menu">
-    {% block menu %}
+        {% block menu %}
 
 
-        {% for cat in category %}
-            {% ifchanged cat.category.pk %}
-                <ul>
-                <h5>{{ cat.category.title_cat }}</h5>
-            {% endifchanged %}
-        <a href="{% url 'job' %}category/{{ cat.slug_sub_cat }}">{{ cat.tittle_sub_cat }}</a>{#заменить хардкод#}
-        </ul>
-        {% endfor %}
-    {% endblock %}
+            {% for cat in category %}
+                {% ifchanged cat.category.pk %}
+                    <ul>
+                    <h5>{{ cat.category.title_cat }}</h5>
+                {% endifchanged %}
+            <a href="{% url 'job' %}category/{{ cat.slug_sub_cat }}">{{ cat.tittle_sub_cat }}</a>{#заменить хардкод#}
+            </ul>
+            {% endfor %}
+        {% endblock %}
     </div>
     {#блок контента#}
     <div id="content">
@@ -50,7 +52,9 @@
             {% for f in form %}
                 <div class="block-job">
                     <ul>
-                        <a href="{% url 'job_view' f.pk %}"><li><strong>{{ f.title }}</strong></li></a>
+                        <a href="{% url 'job_view' f.pk %}">
+                            <li><strong>{{ f.title }}</strong></li>
+                        </a>
                         <li>{{ f.description }}</li>
                         <li><strong>От {{ f.max_price }}₽ до {{ f.max_price }}₽</strong></li>
                         <li>Дедлайн: {{ f.expired_date }}</li>
@@ -64,7 +68,17 @@
     {#фильтр#}
     <div id="filter">
         {% block filter %}
-            <h5>Фильтр</h5>
+
+
+            <div class="polzunok-container-5">
+                <form action="{% url 'filter' %}" method="post">
+                    {% csrf_token %}
+                <input type="text" class="polzunok" size="15" name="min_price" placeholder="оплата от"/>
+                <input type="text" class="polzuno" size="15" name="max_price" placeholder="до"/>
+                <div class="polzunok-5"></div>
+                    <button type="submit">Фильтр</button>
+                    </form>
+            </div>
         {% endblock %}
     </div>
 

@@ -1,0 +1,12 @@
+{% extends 'basic.html' %}
+
+{% block menu %}
+    {% include 'module/profile_menu.html' %}
+{% endblock %}
+
+{% block content %}
+    {% for f in content %}
+        {{ f }}
+    {% endfor %}
+
+{% endblock %}

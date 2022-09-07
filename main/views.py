@@ -12,7 +12,7 @@ from django.views.generic import CreateView, UpdateView, ListView
 
 from main.forms import UserCrForm, CreateJobForm, ChangeUserInfoForm, ChangePasswordForm, ProposalForm
 from main.models import AdvUser, Job, Chat, Proposal
-from main.services import read_message, write_message
+from main.services import read_message, write_message, check_filter_price
 
 
 def index(request):
@@ -200,3 +200,13 @@ def pay(request):
         context = {'proposal_id': request.POST['proposal_id'],
                    'price': request.POST['price']}
         return render(request, 'pay.html', context=context)
+
+
+def filters(request):
+    if request.method == 'POST':
+        min_price, max_price = check_filter_price(request.POST)
+        context = {'content': Job.objects.filter(max_price__gte=min_price,
+                                                 min_price__lte=max_price)}
+        return render(request, 'filter.html', context)
+
+    return render(request, 'filter.html')
