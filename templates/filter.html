@@ -5,8 +5,11 @@
 {% endblock %}
 
 {% block content %}
+    {% if not content %}
+        <p>Ничего не найдено</p>
+    {% else %}
     {% for f in content %}
         {{ f }}
     {% endfor %}
-
+    {% endif %}
 {% endblock %}

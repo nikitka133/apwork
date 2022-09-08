@@ -1,0 +1,18 @@
+{% extends 'basic.html' %}
+
+{% block menu %}
+    {% include 'module/profile_menu.html' %}
+{% endblock %}
+
+{% block content %}
+    {% if user.role == 'fr' and proposal %}
+        {% for prop in proposal %}
+            <h6>{{ prop.job }}</h6>
+            <a>{{ prop.message }}</a>
+            <a>{{ prop.job.expired_date }}</a><br>
+            ---------------------
+        {% endfor %}
+    {% else %}
+        <p>У Вас пока нет ативных заданий</p>
+    {% endif %}
+{% endblock %}

@@ -9,6 +9,7 @@ urlpatterns = [
     path('job/', views.JobListView.as_view(), name='job'),
     path('job/<int:pk>', views.job_view, name='job_view'),
     path('job/category/<slug:slug_sub_cat>', views.JobSubCatListView.as_view(), name='job_cat_view'),
+    path('job/process', views.job_in_process, name='job_in_process'),
     path('accounts/register/', views.RegisterUserView.as_view(), name='register'),
     path('accounts/pay/', views.pay, name='pay'),
     path('accounts/proposal/', views.proposal, name='proposal'),

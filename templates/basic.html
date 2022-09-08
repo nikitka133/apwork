@@ -20,7 +20,7 @@
         <ul>
             {% if request.user.is_authenticated %}
                 <a href="{% url 'account' %}">
-                    <li>{{ user.username }}</li>
+                    <li>Профиль</li>
                 </a>
                 <li><a href="{% url 'logout' %}">Выход</a></li>
             {% else %}
@@ -33,16 +33,18 @@
     {#меню#}
     <div id="menu">
         {% block menu %}
+            <ul>
+                {% for cat in category %}
+                    {% ifchanged cat.category.pk %}
+                        <h5>{{ cat.category.title_cat }}</h5>
 
+                    {% endifchanged %}
+                    <a href="{% url 'job' %}category/{{ cat.slug_sub_cat }}">
+                        <li>{{ cat.tittle_sub_cat }}</li>
+                    </a>{#-------------заменить хардкод-------------------#}
 
-            {% for cat in category %}
-                {% ifchanged cat.category.pk %}
-                    <ul>
-                    <h5>{{ cat.category.title_cat }}</h5>
-                {% endifchanged %}
-            <a href="{% url 'job' %}category/{{ cat.slug_sub_cat }}">{{ cat.tittle_sub_cat }}</a>{#заменить хардкод#}
+                {% endfor %}
             </ul>
-            {% endfor %}
         {% endblock %}
     </div>
     {#блок контента#}
@@ -56,7 +58,7 @@
                             <li><strong>{{ f.title }}</strong></li>
                         </a>
                         <li>{{ f.description }}</li>
-                        <li><strong>От {{ f.max_price }}₽ до {{ f.max_price }}₽</strong></li>
+                        <li><strong>От {{ f.min_price }}₽ до {{ f.max_price }}₽</strong></li>
                         <li>Дедлайн: {{ f.expired_date }}</li>
                     </ul>
                 </div>
@@ -68,17 +70,21 @@
     {#фильтр#}
     <div id="filter">
         {% block filter %}
+            <form action="{% url 'filter' %}" method="post">
+                {% csrf_token %}
 
+                <input type="number" class="form-control" name="min_price" placeholder="оплата от" value="{{ min }}"/>
+                <input type="number" class="form-control" name="max_price" placeholder="до" value="{{ max }}"/>
+                <strong>Категория</strong><br>
+                <select name="category">
+                    {% for cat in category %}
+                        <option value="{{ cat.slug_sub_cat }}">{{ cat.tittle_sub_cat }}</option>
+                    {% endfor %}
+                </select>
 
-            <div class="polzunok-container-5">
-                <form action="{% url 'filter' %}" method="post">
-                    {% csrf_token %}
-                <input type="text" class="polzunok" size="15" name="min_price" placeholder="оплата от"/>
-                <input type="text" class="polzuno" size="15" name="max_price" placeholder="до"/>
-                <div class="polzunok-5"></div>
-                    <button type="submit">Фильтр</button>
-                    </form>
-            </div>
+                <button style="margin-top: 5px" type="submit" class="btn btn-primary">Фильтр</button>
+            </form>
+
         {% endblock %}
     </div>
 

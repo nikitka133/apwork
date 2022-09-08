@@ -5,13 +5,13 @@
 {% endblock %}
 
 {% block content %}
-    Страница профиля, здесь будут отображаться ваши вакансии
 {#    для работодателя#}
     {% if user.role == 'em' %}
-        <a href="{% url 'create_job' %}"><strong>Добавить работу</strong></a>
+        <a href="{% url 'create_job' %}"><strong>Добавить работу</strong></a><br>
     {% endif %}
-
+    <br>
     {% for job in jobs %}
-    {{ job }}
+        Размещенные вакансии
+        <p>{{ job }}</p><br>
     {% endfor %}
 {% endblock %}

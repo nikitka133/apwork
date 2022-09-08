@@ -134,6 +134,9 @@ li {
     color: #444444;
 }
 
+#menu li {
+    padding-left: 10px;
+}
 .create-form {
     margin:0 auto;
     max-width: 400px;
@@ -144,6 +147,14 @@ li {
     border: 3px solid #444444;
 }
 
-.polzunok-container-5 {
+.default-form {
+    width: 40vh;
+    margin:0 auto;
+}
 
+.form-control {
+
+    width: 100px !important;
+    float: left;
+    margin: 5px;
 }

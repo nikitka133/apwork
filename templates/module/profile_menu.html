@@ -1,5 +1,10 @@
 <div class="profile-menu">
     <ul>
+        {% if user.role == 'fr' %}
+        <a href="{% url 'job_in_process' %}">
+            <li>Выполняемые работы</li>
+        </a>
+    {% endif %}
         <a href="{% url 'account' %}">
             <li>Профиль</li>
         </a>

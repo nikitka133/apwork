@@ -25,7 +25,7 @@ class UserCrForm(UserCreationForm):
 
 
 class CreateJobForm(ModelForm):
-    expired_date = forms.DateField(label='Сделать до', widget=forms.DateInput({'type': 'date'}))
+    expired_date = forms.DateField(help_text='Необходимо завершить до', widget=forms.DateInput({'type': 'date'}))
 
     class Meta:
         model = Job
@@ -37,12 +37,12 @@ class CreateJobForm(ModelForm):
 class ChangeUserInfoForm(forms.ModelForm):
     class Meta:
         model = AdvUser
-        fields = 'first_name', 'last_name', 'email',
+        fields = 'first_name', 'last_name',
 
 
 class ChangePasswordForm(PasswordChangeForm):
-    new_password1 = forms.CharField()
-    new_password2 = forms.CharField()
+    new_password1 = forms.CharField(label='Новый пароль', widget=forms.TextInput(attrs={'type': 'password'}))
+    new_password2 = forms.CharField(label='Повтрите новый пароль', widget=forms.TextInput(attrs={'type': 'password'}))
 
 
 class ProposalForm(forms.ModelForm):

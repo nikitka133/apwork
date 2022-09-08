@@ -20,7 +20,7 @@ class AdvUser(AbstractUser):
 class Job(models.Model):
     title = models.CharField(max_length=150, verbose_name='Название')
     description = models.TextField(max_length=2000, verbose_name='Описание')
-    expired_date = models.DateField(null=True, verbose_name='Дедлайн', blank=True)
+    expired_date = models.DateField(help_text='Необходимо завершить до', null=True, verbose_name='Дедлайн', blank=True)
     create_date = models.DateTimeField(auto_now_add=True, verbose_name='Дата создания')
     author = models.ForeignKey(AdvUser, on_delete=models.CASCADE, verbose_name='Работодатель')
     executor = models.ForeignKey(AdvUser, on_delete=models.PROTECT, related_name='executor',

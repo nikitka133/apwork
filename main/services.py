@@ -23,7 +23,9 @@ def check_filter_price(request):
     """проверяет запропрос что мин и макс диапазон цены фильтра не пустые"""
     if request['min_price'] and request['max_price']:
         return request['min_price'], request['max_price']
-    elif request['min_price']:
+    elif request['min_price'] and not request['max_price']:
         return request['min_price'], '999999'
-    else:
+    elif not request['min_price'] and request['max_price']:
         return '0', request['max_price']
+    else:
+        return '0', '999999'

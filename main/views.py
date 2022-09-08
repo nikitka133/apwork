@@ -76,7 +76,7 @@ class ChangeUserInfoView(SuccessMessageMixin, LoginRequiredMixin, UpdateView):
     model = AdvUser
     template_name = "settings.html"
     form_class = ChangeUserInfoForm
-    success_url = reverse_lazy("main:profile")
+    success_url = reverse_lazy("account")
     success_message = "Данные изменены"
 
     # получаем id пользователя
@@ -107,15 +107,16 @@ class JobListView(ListView):
     paginate_by = 2
 
     def get_queryset(self):
-        return Job.objects.filter(is_active=True, processing=False)
-
+        queryset = Job.objects.filter(is_active=True, processing=False)
+        return queryset
 
 class JobSubCatListView(ListView):
     template_name = 'category.html'
     paginate_by = 2
 
     def get_queryset(self):
-        return Job.objects.filter(category=self.kwargs['slug_sub_cat'])
+        queryset = Job.objects.filter(category=self.kwargs['slug_sub_cat'])
+        return queryset
 
 
 @login_required
@@ -203,10 +204,21 @@ def pay(request):
 
 
 def filters(request):
+    print(request.POST)
     if request.method == 'POST':
         min_price, max_price = check_filter_price(request.POST)
-        context = {'content': Job.objects.filter(max_price__gte=min_price,
-                                                 min_price__lte=max_price)}
+        context = {'min': min_price,
+                   'max': max_price,
+                   'content': Job.objects.filter(max_price__gte=min_price,
+                                                 min_price__lte=max_price,
+                                                 category__slug_sub_cat=request.POST['category']),
+                   }
         return render(request, 'filter.html', context)
 
     return render(request, 'filter.html')
+
+
+@login_required
+def job_in_process(request):
+    context = {'proposal': Proposal.objects.filter(sender=request.user.id)}
+    return render(request, 'process.html', context=context)

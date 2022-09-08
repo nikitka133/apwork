@@ -1,9 +1,15 @@
 {% extends 'basic.html' %}
-
+{% load bootstrap4 %}
 {% block menu %}
     {% include 'module/profile_menu.html' %}
 {% endblock %}
 
 {% block content %}
-    {{ form.as_p }}
+    <div class="default-form">
+    <form action="" method="post">
+        {% csrf_token %}
+        {% bootstrap_form form %}
+        <button type="submit" class="btn btn-primary">Изменить</button>
+    </form>
+    </div>
 {% endblock %}
