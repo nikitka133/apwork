@@ -6,7 +6,7 @@
         <ul>
                 <li><strong>{{ form.title }}</strong></li>
             <li>{{ form.description }}</li>
-            <li><strong>От {{ form.max_price }}₽ до {{ form.max_price }}₽</strong></li>
+            <li><strong>От {{ form.min_price }}₽ до {{ form.max_price }}₽</strong></li>
             <li>Дедлайн: {{ form.expired_date }}</li>
 
         </ul>
@@ -24,6 +24,7 @@
             <input type="hidden"  name="sender" value="{{ user.username }}">
             <input type="hidden"  name="author" value="{{ form.author }}">
             <input type="hidden"  name="job_name" value="{{ form.title }}">
+            <input type="hidden"  name="chat_id" value="{{ form.id }}">
             <button type="submit">Сообщение</button>
         </form>
         {% else %}

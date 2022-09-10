@@ -36,13 +36,11 @@
             <ul>
                 {% for cat in category %}
                     {% ifchanged cat.category.pk %}
-                        <h5>{{ cat.category.title_cat }}</h5>
-
+                        <li><b>{{ cat.category.title_cat }}</b></li>
                     {% endifchanged %}
-                    <a href="{% url 'job' %}category/{{ cat.slug_sub_cat }}">
-                        <li>{{ cat.tittle_sub_cat }}</li>
-                    </a>{#-------------заменить хардкод-------------------#}
 
+                    <li><a href="{% url 'job_cat_view' cat.slug_sub_cat %}">
+                        {{ cat.tittle_sub_cat }}</a></li>
                 {% endfor %}
             </ul>
         {% endblock %}
@@ -51,36 +49,31 @@
     <div id="content">
         {% bootstrap_messages %}
         {% block content %}
-            {% for f in form %}
-                <div class="block-job">
-                    <ul>
-                        <a href="{% url 'job_view' f.pk %}">
-                            <li><strong>{{ f.title }}</strong></li>
-                        </a>
-                        <li>{{ f.description }}</li>
-                        <li><strong>От {{ f.min_price }}₽ до {{ f.max_price }}₽</strong></li>
-                        <li>Дедлайн: {{ f.expired_date }}</li>
-                    </ul>
-                </div>
-            {% endfor %}
+            <h3>Последние вакансии</h3>
 
+            {% include 'module/view_list_job.html' %}
+
+            <div style="text-align: center"><b><a href="{% url 'job' %}">Открыть все</a></b></div>
         {% endblock %}
 
     </div>
     {#фильтр#}
     <div id="filter">
+
         {% block filter %}
             <form action="{% url 'filter' %}" method="post">
                 {% csrf_token %}
 
-                <input type="number" class="form-control" name="min_price" placeholder="оплата от" value="{{ min }}"/>
-                <input type="number" class="form-control" name="max_price" placeholder="до" value="{{ max }}"/>
+                <input type="number" class="filter-form" name="min_price" placeholder="оплата от" value="{{ min }}"/>
+                <input type="number" class="filter-form" name="max_price" placeholder="до" value="{{ max }}"/>
                 <strong>Категория</strong><br>
-                <select name="category">
-                    {% for cat in category %}
-                        <option value="{{ cat.slug_sub_cat }}">{{ cat.tittle_sub_cat }}</option>
-                    {% endfor %}
-                </select>
+                <label>
+                    <select name="category">
+                        {% for cat in category %}
+                            <option value="{{ cat.slug_sub_cat }}">{{ cat.tittle_sub_cat }}</option>
+                        {% endfor %}
+                    </select>
+                </label>
 
                 <button style="margin-top: 5px" type="submit" class="btn btn-primary">Фильтр</button>
             </form>

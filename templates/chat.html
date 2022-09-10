@@ -1,7 +1,7 @@
 {% extends 'basic.html' %}
 
 {% block menu %}
-
+    {% include 'module/profile_menu.html' %}
 {% endblock %}
 
 {% block content %}
@@ -16,4 +16,8 @@
         <input name="message" value="">
         <button type="submit">Отправить</button>
     </form>
+{% endblock %}
+
+{% block filter %}
+
 {% endblock %}

@@ -5,7 +5,6 @@ def write_message(name_chat, message, author):
     """записывает сообщение в файл"""
     if name_chat:
         with open(CHAT_ROOT + name_chat + '.txt', 'a', encoding='utf-8') as file:
-            print(name_chat)
             file.write(f'{author}: {message} \n')
 
 

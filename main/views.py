@@ -8,15 +8,15 @@ from django.contrib.messages.views import SuccessMessageMixin
 from django.shortcuts import redirect, render, get_object_or_404
 from django.urls import reverse_lazy
 from django.utils.datastructures import MultiValueDictKeyError
-from django.views.generic import CreateView, UpdateView, ListView
+from django.views.generic import CreateView, UpdateView, ListView, DetailView
 
-from main.forms import UserCrForm, CreateJobForm, ChangeUserInfoForm, ChangePasswordForm, ProposalForm
+from main.forms import UserCrForm, CreateJobForm, ChangeUserInfoForm, ChangePasswordForm, ProposalForm, ChangeJobForm
 from main.models import AdvUser, Job, Chat, Proposal
 from main.services import read_message, write_message, check_filter_price
 
 
 def index(request):
-    context = {'form': Job.objects.all()[:10]}
+    context = {'form': Job.objects.all()[:5]}
     return render(request, 'basic.html', context)
 
 
@@ -51,6 +51,7 @@ def logout_user(request):
 
 @login_required
 def create_job(request):
+    print(request.POST)
     if request.method == 'POST':
         form = CreateJobForm(request.POST)
         if form.is_valid() and (request.POST['author'] == str(request.user.id)):
@@ -105,14 +106,17 @@ def job_view(request, pk):
 class JobListView(ListView):
     template_name = 'job.html'
     paginate_by = 2
+    context_object_name = 'form'
 
     def get_queryset(self):
         queryset = Job.objects.filter(is_active=True, processing=False)
         return queryset
 
+
 class JobSubCatListView(ListView):
     template_name = 'category.html'
     paginate_by = 2
+    context_object_name = 'form'
 
     def get_queryset(self):
         queryset = Job.objects.filter(category=self.kwargs['slug_sub_cat'])
@@ -131,8 +135,9 @@ def chat(request):
         else:
             # получение или созадание чата из обьявления
             job_name = request.GET['job_name']
-            name_chat = '_'.join(sorted((request.GET['sender'], request.GET['author'])))
-            Chat.objects.get_or_create(name_chat=name_chat, path=name_chat + '.txt', job_name=job_name)
+            name_chat = '_'.join(sorted((request.GET['sender'], request.GET['author']))) + '_' + request.GET['chat_id']
+            Chat.objects.get_or_create(name_chat=name_chat,
+                                       path=name_chat + '.txt', job_name=job_name)
             context = {'message': read_message(name_chat),
                        "name_chat": name_chat}
             return render(request, 'chat.html', context)
@@ -209,9 +214,9 @@ def filters(request):
         min_price, max_price = check_filter_price(request.POST)
         context = {'min': min_price,
                    'max': max_price,
-                   'content': Job.objects.filter(max_price__gte=min_price,
-                                                 min_price__lte=max_price,
-                                                 category__slug_sub_cat=request.POST['category']),
+                   'form': Job.objects.filter(max_price__gte=min_price,
+                                              min_price__lte=max_price,
+                                              category__slug_sub_cat=request.POST['category']),
                    }
         return render(request, 'filter.html', context)
 
@@ -222,3 +227,21 @@ def filters(request):
 def job_in_process(request):
     context = {'proposal': Proposal.objects.filter(sender=request.user.id)}
     return render(request, 'process.html', context=context)
+
+
+class ChangeJob(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
+    model = Job
+    template_name = "change_job.html"
+    form_class = ChangeJobForm
+    success_url = reverse_lazy("account")
+    success_message = "Данные изменены"
+
+# def by_category(request, category_id):
+#     bbs = Ad.objects.filter(category=category_id)
+#     cat = Category.objects.all()
+#     current_cat = Category.objects.get(pk=category_id)
+#     paginator = Paginator(bbs, 2)
+#     page_number = request.GET.get("page")
+#     page = paginator.get_page(page_number)
+#     context = {"bbs": bbs, "cat": cat, "current_cat": current_cat, "page": page, "paginator": paginator}
+#     return render(request, "bboard/cat.html", context)

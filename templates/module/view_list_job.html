@@ -1,0 +1,13 @@
+{% for f in form %}
+    <div class="block-job">
+        <ul>
+            <a href="{% url 'job_view' f.pk %}">
+                <li><strong>{{ f.title }}</strong></li>
+            </a>
+            <li class="text">{{ f.description }}</li>
+            <li><strong>От {{ f.min_price }}₽ до {{ f.max_price }}₽</strong></li>
+            <li>Дедлайн: {{ f.expired_date }}</li>
+        </ul>
+    </div>
+{% endfor %}
+

@@ -6,16 +6,9 @@
     <form action="" method="post">
 
             {% csrf_token %}
-{#        {% for f in form %}#}
-{#            {{ f }}#}
-{#        {% endfor %}#}
         {% bootstrap_form form %}
-        {% bootstrap_form_errors form %}
         {% bootstrap_button "Разместить" button_type="submit" %}
-{#        <input type="text" value="{{ user.pk }}" name="author">{{ form.author }}#}
-        {{ form.errors }}
-        {{ form.non_field_errors }}
-        {{ form.error_class }}
+
     </form>
     </div>
 {% endblock %}

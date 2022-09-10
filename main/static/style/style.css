@@ -121,7 +121,7 @@ a:hover {
     color: #800000;}
 
 .profile-menu {
-    margin-left: 15px;
+    margin-top: 10px;
 }
 
 li {
@@ -148,13 +148,20 @@ li {
 }
 
 .default-form {
-    width: 40vh;
+    width: 40vh ;
     margin:0 auto;
 }
 
-.form-control {
+.filter-form {
+    margin: 3px;
+    width: 150px;
+}
 
-    width: 100px !important;
-    float: left;
-    margin: 5px;
+.text {
+   overflow: hidden;
+   text-overflow: ellipsis;
+   display: -webkit-box;
+   -webkit-line-clamp: 3; /* number of lines to show */
+           line-clamp: 10;
+   -webkit-box-orient: vertical;
 }

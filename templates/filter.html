@@ -1,15 +1,12 @@
 {% extends 'basic.html' %}
 
-{% block menu %}
-    {% include 'module/profile_menu.html' %}
-{% endblock %}
 
 {% block content %}
-    {% if not content %}
+    {% if not form %}
         <p>Ничего не найдено</p>
     {% else %}
-    {% for f in content %}
-        {{ f }}
-    {% endfor %}
+
+{% include 'module/view_list_job.html' %}
+
     {% endif %}
 {% endblock %}

@@ -5,13 +5,15 @@
 {% endblock %}
 
 {% block content %}
-{#    для работодателя#}
-    {% if user.role == 'em' %}
-        <a href="{% url 'create_job' %}"><strong>Добавить работу</strong></a><br>
-    {% endif %}
-    <br>
+
+
+    <h6>Размещенные вакансии:</h6>
     {% for job in jobs %}
-        Размещенные вакансии
-        <p>{{ job }}</p><br>
+
+        <a href="{% url 'job_change' job.pk %}">{{ job }}</a><br>
     {% endfor %}
+{% endblock %}
+
+{% block filter %}
+
 {% endblock %}

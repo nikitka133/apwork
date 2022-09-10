@@ -46,12 +46,19 @@ class ChangePasswordForm(PasswordChangeForm):
 
 
 class ProposalForm(forms.ModelForm):
-
     class Meta:
         model = Proposal
         fields = '__all__'
-        exclude = ('accepted', )
+        exclude = ('accepted',)
         widgets = {'sender': forms.HiddenInput,
                    'employer': forms.HiddenInput,
                    'job': forms.HiddenInput,
                    }
+
+
+class ChangeJobForm(forms.ModelForm):
+    class Meta:
+        model = Job
+        fields = '__all__'
+        exclude = ('is_active', 'processing', 'offer', 'executor')
+        widgets = {'author': forms.HiddenInput}
